@@ -64,7 +64,7 @@
                     time += `${timeObject.second}`;
                     time += timeObject.second === 1 ? " Second " : " Seconds ";
                 } else {
-                    if (seconds) {
+                    if (timeObject.seconds) {
                         $(this).text(settings.prefix + timeObject.second + (timeObject.second === 1 ? " Second " : " Seconds ") + settings.postfix);
                     } else {
                         $(this).text("Just now");
