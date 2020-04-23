@@ -13,7 +13,7 @@
             var element = $(this);
             var elementDate = new Date(element.data('time'))
             var timeObject = getTimeDifference(settings.currentTime, elementDate);
-            var time = settings.prefix;
+            var time = '';
             if(timeObject.year > 0) {
                 if (settings.full) {
                     time += `${timeObject.year}`;
