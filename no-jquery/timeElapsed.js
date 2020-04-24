@@ -7,62 +7,81 @@ const timeElapsed = function(options) {
         postfix: 'ago',
         seconds: false
     };
-    var settings = $.extend( {}, defaults, options );
-        var timeObject = getTimeDifference(settings.currentTime, settings.date);
-        var time = '';
-        if(timeObject.year > 0) {
-            if (settings.full) {
-                time += `${timeObject.year}`;
-                time += timeObject.year === 1 ? " Year " : " Years ";
-            } else {
-                return settings.prefix + timeObject.year + (timeObject.year === 1 ? " Year " : " Years ") + settings.postfix;
-            }
+    if (options) {
+        var settings = jsExtend( defaults, options );
+    } else {
+        var settings = defaults;
+    }
+
+    var timeObject = getTimeDifference(settings.currentTime, settings.date);
+    var time = '';
+    if(timeObject.year > 0) {
+        if (settings.full) {
+            time += `${timeObject.year}`;
+            time += timeObject.year === 1 ? " Year " : " Years ";
+        } else {
+            return settings.prefix + timeObject.year + (timeObject.year === 1 ? " Year " : " Years ") + settings.postfix;
         }
-        if(timeObject.month > 0) {
-            if (settings.full) {
-                time += `${timeObject.month}`;
-                time += timeObject.month === 1 ? " Month " : " Months ";
-            } else {
-                return settings.prefix + timeObject.month + (timeObject.month === 1 ? " Month " : " Months ") + settings.postfix;
-            }
+    }
+    if(timeObject.month > 0) {
+        if (settings.full) {
+            time += `${timeObject.month}`;
+            time += timeObject.month === 1 ? " Month " : " Months ";
+        } else {
+            return settings.prefix + timeObject.month + (timeObject.month === 1 ? " Month " : " Months ") + settings.postfix;
         }
-        if(timeObject.day > 0) {
-            if (settings.full) {
-                time += `${timeObject.day}`;
-                time += timeObject.day === 1 ? " Day " : " Days ";
-            } else {
-                return settings.prefix + timeObject.day + (timeObject.day === 1 ? " Day " : " Days ") + settings.postfix;
-            }
+    }
+    if(timeObject.day > 0) {
+        if (settings.full) {
+            time += `${timeObject.day}`;
+            time += timeObject.day === 1 ? " Day " : " Days ";
+        } else {
+            return settings.prefix + timeObject.day + (timeObject.day === 1 ? " Day " : " Days ") + settings.postfix;
         }
-        if(timeObject.hour > 0) {
-            if (settings.full) {
-                time += `${timeObject.hour}`;
-                time += timeObject.hour === 1 ? " Hour " : " Hours ";
-            } else {
-                return settings.prefix + timeObject.hour + (timeObject.hour === 1 ? " Hour " : " Hours ") + settings.postfix;
-            }
+    }
+    if(timeObject.hour > 0) {
+        if (settings.full) {
+            time += `${timeObject.hour}`;
+            time += timeObject.hour === 1 ? " Hour " : " Hours ";
+        } else {
+            return settings.prefix + timeObject.hour + (timeObject.hour === 1 ? " Hour " : " Hours ") + settings.postfix;
         }
-        if(timeObject.minute > 0) {
-            if (settings.full) {
-                time += `${timeObject.minute}`;
-                time += timeObject.minute === 1 ? " Minute " : " Minutes ";
-            } else {
-                return settings.prefix + timeObject.minute + (timeObject.minute === 1 ? " Minute " : " Minutes ") + settings.postfix;
-            }
+    }
+    if(timeObject.minute > 0) {
+        if (settings.full) {
+            time += `${timeObject.minute}`;
+            time += timeObject.minute === 1 ? " Minute " : " Minutes ";
+        } else {
+            return settings.prefix + timeObject.minute + (timeObject.minute === 1 ? " Minute " : " Minutes ") + settings.postfix;
         }
-        if(timeObject.second > 0) {
-            if (settings.full) {
-                time += `${timeObject.second}`;
-                time += timeObject.second === 1 ? " Second " : " Seconds ";
-            } else {
-                if (timeObject.seconds) {
-                    return settings.prefix + timeObject.second + (timeObject.second === 1 ? " Second " : " Seconds ") + settings.postfix;
-                }
-                return "Just now";
+    }
+    if(timeObject.second > 0) {
+        if (settings.full) {
+            time += `${timeObject.second}`;
+            time += timeObject.second === 1 ? " Second " : " Seconds ";
+        } else {
+            if (timeObject.seconds) {
+                return settings.prefix + timeObject.second + (timeObject.second === 1 ? " Second " : " Seconds ") + settings.postfix;
             }
+            return "Just now";
         }
-        return settings.prefix + time + settings.postfix;
+    }
+    return settings.prefix + time + settings.postfix;
 };
+function jsExtend(defaults, options) {
+    const settings = {};
+    const ObjectKeys = Object.keys(defaults);
+    for (var i = 0; i < ObjectKeys.length; i++) {
+        const singleKey = ObjectKeys[i];
+        if (options.hasOwnProperty(singleKey)) {
+            settings[singleKey] = options[singleKey];
+        } else {
+            settings[singleKey] = defaults[singleKey];
+        }
+    }
+    return settings;
+}
+
 function getTimeDifference(currentTime, oldTime) {
     const mTimeDifference  = Math.abs(currentTime - oldTime); // Time in Milliseconds
     const sTimeDifference    = mTimeDifference / 1000 // Time in Seconds
@@ -81,3 +100,4 @@ function getTimeDifference(currentTime, oldTime) {
         second : secondDifference
     };
 }
+
